@@ -11,4 +11,15 @@ package trabalho;
  */
 public class Server {
     
+    public static void main(String[] args) {
+        
+        int regPort= 1099;
+        
+        Manager man = new ManagerImp();
+        
+        java.rmi.registry.Registry registry = java.rmi.registry.LocateRegistry.getRegistry(regPort);
+        
+        registry.rebind("manager", man);  // NOME DO SERVICO
+
+    }
 }
