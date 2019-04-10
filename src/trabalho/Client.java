@@ -6,6 +6,7 @@
 package trabalho;
 
 import java.util.Scanner;
+import java.util.Vector;
 
 /**
  *
@@ -13,17 +14,35 @@ import java.util.Scanner;
  */
 public class Client {
     
+    Manager man;
     
-    public Client() {
+    public Client(Manager man) {
         
-        
+        this.man = man;
     }
     
     public static void main(String[] args) throws Exception {
         
-        Client cl = new Client();
+        String regHost = "localhost";
+	String regPort = "9000";
         
-        cl.menu();
+        try {
+	    // objeto que fica associado ao proxy para objeto remoto
+	    Manager man = (Manager) java.rmi.Naming.lookup("rmi://" + regHost + ":" + 
+						  regPort + "/manager");
+	    
+
+	    // invocacao de metodos remotos
+
+            Client cl = new Client(man);
+        
+            cl.menu();
+
+	} 
+	catch (Exception ex) {
+	    ex.printStackTrace();
+	}
+        
     }
     
     public void menu() throws Exception {
@@ -163,6 +182,8 @@ public class Client {
             }
             
             Survey sur =  new Survey(num_quest, questions);
+            
+            this.man.insertSurvey(sur);
             
         } else {
             
