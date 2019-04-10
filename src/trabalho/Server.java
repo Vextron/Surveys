@@ -5,13 +5,15 @@
  */
 package trabalho;
 
+import java.rmi.RemoteException;
+
 /**
  *
  * @author nuno1
  */
 public class Server {
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws RemoteException {
         
         int regPort= 1099;
         
@@ -19,7 +21,7 @@ public class Server {
         
         java.rmi.registry.Registry registry = java.rmi.registry.LocateRegistry.getRegistry(regPort);
         
-        registry.rebind("manager", man);  // NOME DO SERVICO
+        registry.rebind("manager", man);  
 
     }
 }
