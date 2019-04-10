@@ -6,6 +6,7 @@
 package trabalho;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,7 +44,33 @@ public class ManagerImp extends UnicastRemoteObject implements Manager,java.io.S
 
     @Override
     public Survey consultSurvey(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          try {
+            ResultSet rs = this.s.executeQuery("SELECT id,num_respostas from questionario where questionario.id = " + id + ")");
+            
+ 
+            
+             while (rs.next()) {
+                int numero= rs.getInt("numero");
+                int num_respostas= rs.getInt("num_respostas");
+ 
+                System.out.println("Numero: "+numero+" num_respostas: "+num_respostas);
+            }
+            rs.close(); // muito importante depois da consulta!
+            
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Problems retrieving data from db...");
+        }
+
+        // desligar do SGBD:
+        pc.disconnect();
+    }
+            
+            
+        } catch (Exception ex) {
+            Logger.getLogger(ManagerImp.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

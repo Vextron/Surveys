@@ -5,13 +5,15 @@
  */
 package trabalho;
 
+import java.rmi.RemoteException;
+
 /**
  *
  * @author nuno1
  */
 public class Server {
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws RemoteException, Exception {
         
         int regPort= 1099;
         PostgresConnector pc = new PostgresConnector("alunos.di.uevora.pt","l37508","l37508","migueltavares");
