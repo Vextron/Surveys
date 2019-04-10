@@ -17,6 +17,6 @@ public interface Manager extends java.rmi.Remote {
     public Questions questionsSurvey(int id);
     public void answersSurvey(Answer a,int id);
     public int consult_numbers_answers(int id);
-    public int average_Survey(Survey s);
+    public int[] average_Survey(int id);
     
 }

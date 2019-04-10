@@ -13,7 +13,11 @@ import java.rmi.RemoteException;
  */
 public class Server {
     
+<<<<<<< HEAD
     public static void main(String[] args) throws RemoteException {
+=======
+    public static void main(String[] args) throws RemoteException, Exception {
+>>>>>>> f09cc70c535ef89fbd9cc34991fc05dc23a9e7b3
         
         int regPort= 1099;
         PostgresConnector pc = new PostgresConnector("alunos.di.uevora.pt","l37508","l37508","migueltavares");
