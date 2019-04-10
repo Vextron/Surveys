@@ -101,23 +101,45 @@ public class Client {
     }
 
     private void consultNumberSubmissions() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Scanner scan = new Scanner(System.in);
+        
+        System.out.println();
     }
 
     private void submitAnswer() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Scanner scan = new Scanner(System.in);
+        
+        System.out.println("Survey ID to answer");
+        
+        int id_to_answer = scan.nextInt();
+        
+        /*Pedir perguntas de questionário ao servidor -> */
+        
     }
 
     private void listSurvey() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Scanner scan =  new Scanner(System.in);
+        
+        System.out.println("ID of survey to consult");
+
+        int id_consult = scan.nextInt();
     }
 
     private void deleteSurvey() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Scanner scan = new Scanner(System.in);
+        
+        System.out.println("ID of survey to remove");
+        
+        int id_remove = scan.nextInt();
     }
 
     private void consultSurvey() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        
     }
 
     private void createSurvey() throws Exception {
@@ -125,9 +147,13 @@ public class Client {
         Scanner scan = new Scanner(System.in);
         Scanner scanQuests =  new Scanner(System.in);
         
+        System.out.println("Num of questions");
+        
         int num_quest = scan.nextInt();
         
         if (num_quest >= 3 && num_quest <= 5) {
+            
+            System.out.println("Enter question");
             
             String[] questions = new String[num_quest];
         
@@ -136,15 +162,12 @@ public class Client {
                 questions[i] = scanQuests.nextLine();
             }
             
-            
+            Survey sur =  new Survey(num_quest, questions);
             
         } else {
             
             throw new Exception("Number of questions out of limit");
         }
-        
-        
-        
-        
+      
     }
 } 

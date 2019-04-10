@@ -5,10 +5,20 @@
  */
 package trabalho;
 
+import java.io.Serializable;
+
 /**
  *
  * @author nuno1
  */
-public class Survey {
+public class Survey implements Serializable{
     
+    int num_quests;
+    String[] questions;
+    
+    public Survey(int num_quests, String[] questions) {
+        
+        this.num_quests = num_quests;
+        this.questions = questions;
+    }
 }
