@@ -19,14 +19,14 @@ public class Client {
         
     }
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         
         Client cl = new Client();
         
         cl.menu();
     }
     
-    public void menu() {
+    public void menu() throws Exception {
         
         System.out.println("Menu -- Escolher opção");
         Scanner scan = new Scanner(System.in);
@@ -46,7 +46,7 @@ public class Client {
         }
     }
     
-    public void applyAction(int option) {
+    public void applyAction(int option) throws Exception {
         
         switch(option) {
             
@@ -120,7 +120,31 @@ public class Client {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void createSurvey() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void createSurvey() throws Exception {
+        
+        Scanner scan = new Scanner(System.in);
+        Scanner scanQuests =  new Scanner(System.in);
+        
+        int num_quest = scan.nextInt();
+        
+        if (num_quest >= 3 && num_quest <= 5) {
+            
+            String[] questions = new String[num_quest];
+        
+            for(int i = 0; i < num_quest; i++) {
+
+                questions[i] = scanQuests.nextLine();
+            }
+            
+            
+            
+        } else {
+            
+            throw new Exception("Number of questions out of limit");
+        }
+        
+        
+        
+        
     }
 } 
