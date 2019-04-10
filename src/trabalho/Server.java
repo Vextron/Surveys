@@ -16,8 +16,10 @@ public class Server {
     public static void main(String[] args) throws RemoteException {
         
         int regPort= 1099;
+        PostgresConnector pc = new PostgresConnector("alunos.di.uevora.pt","l37508","l37508","migueltavares");
+        pc.connect();
         
-        Manager man = new ManagerImp();
+        ManagerImp man = new ManagerImp(pc.getStatement());
         
         java.rmi.registry.Registry registry = java.rmi.registry.LocateRegistry.getRegistry(regPort);
         

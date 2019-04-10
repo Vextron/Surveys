@@ -4,20 +4,41 @@
  * and open the template in the editor.
  */
 package trabalho;
+import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author mt
  */
 public class ManagerImp extends UnicastRemoteObject implements Manager,java.io.Serializable{
-
-    public ManagerImp()
+    
+    Statement s;
+    
+    public ManagerImp(Statement s) throws RemoteException
     {
+     
         super();
+        this.s = s;
     }
+    
     @Override
     public void insertSurvey(Survey s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            int id = this.s.executeUpdate("insert into questionario values(0) returning ID");
+            
+            for(int i=0;i<s.num_quests;i++)
+            {
+                this.s.executeUpdate("insert into perguntas values ("+ id+","+ s.questions[i]+")");
+            }
+            
+            
+        } catch (Exception ex) {
+            Logger.getLogger(ManagerImp.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
