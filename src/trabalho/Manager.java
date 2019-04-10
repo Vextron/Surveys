@@ -9,6 +9,14 @@ package trabalho;
  *
  * @author mt
  */
-public interface Manager {
+public interface Manager extends java.rmi.Remote {
+    
+    public void insertSurvey(Survey s);
+    public Survey consultSurvey(int id);
+    public void deleteSurvey(int id);
+    public Questions questionsSurvey(int id);
+    public void answersSurvey(Answer a,int id);
+    public int consult_numbers_answers(int id);
+    public int average_Survey(Survey s);
     
 }
