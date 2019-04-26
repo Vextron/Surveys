@@ -2,10 +2,6 @@ package trabalho;
 
 import java.sql.*;
 
-/**
- *
- * @author jsaias
- */
 public class PostgresConnector {
 
     private String PG_HOST;

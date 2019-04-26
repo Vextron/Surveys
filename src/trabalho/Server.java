@@ -5,29 +5,40 @@
  */
 package trabalho;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.rmi.RemoteException;
+import java.util.Properties;
 
 /**
  *
  * @author nuno1
  */
 public class Server {
-    
-<<<<<<< HEAD
-    public static void main(String[] args) throws RemoteException {
-=======
+
     public static void main(String[] args) throws RemoteException, Exception {
->>>>>>> f09cc70c535ef89fbd9cc34991fc05dc23a9e7b3
-        
-        int regPort= 1099;
-        PostgresConnector pc = new PostgresConnector("alunos.di.uevora.pt","l37508","l37508","migueltavares");
-        pc.connect();
-        
-        ManagerImp man = new ManagerImp(pc.getStatement());
-        
+
+        int regPort = 9000;
+
+        InputStream in = new FileInputStream("./conf.properties");
+
+        Properties prop = new Properties();
+
+        prop.load(in);
+
+        String url = prop.getProperty("db.url", "localhost");
+        String user = prop.getProperty("db.user");
+        String database = prop.getProperty("db.database");
+        String psw = prop.getProperty("db.psw");
+
+        ManagerImp man = new ManagerImp(url, user, database, psw);
+
         java.rmi.registry.Registry registry = java.rmi.registry.LocateRegistry.getRegistry(regPort);
-        
-        registry.rebind("manager", man);  
+
+        registry.rebind("manager", man);
+
+        System.out.println("Ready to Go!");
 
     }
 }

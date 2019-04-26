@@ -5,10 +5,20 @@
  */
 package trabalho;
 
+import java.util.Vector;
+
 /**
  *
  * @author nuno1
  */
-public class Questions {
+public class Questions implements java.io.Serializable {
     
+    Vector<String> questions;
+    int num_questions;
+    
+    public Questions(int num_quests, Vector<String> questions) {
+        
+        this.num_questions = num_quests;
+        this.questions = questions;
+    }
 }

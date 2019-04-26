@@ -5,6 +5,7 @@
  */
 package trabalho;
 
+import java.rmi.RemoteException;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -13,182 +14,262 @@ import java.util.Vector;
  * @author nuno1
  */
 public class Client {
-    
+
     Manager man;
-    
+
     public Client(Manager man) {
-        
+
         this.man = man;
     }
-    
-    public static void main(String[] args) throws Exception {
-        
-        String regHost = "localhost";
-	String regPort = "9000";
-        
-        try {
-	    // objeto que fica associado ao proxy para objeto remoto
-	    Manager man = (Manager) java.rmi.Naming.lookup("rmi://" + regHost + ":" + 
-						  regPort + "/manager");
-	    
 
-	    // invocacao de metodos remotos
+    public static void main(String[] args) throws Exception {
+
+        String regHost = "localhost";
+        String regPort = "9000";
+
+        try {
+
+            Manager man = (Manager) java.rmi.Naming.lookup("rmi://" + regHost + ":"
+                    + regPort + "/manager");
 
             Client cl = new Client(man);
-        
+
             cl.menu();
 
-	} 
-	catch (Exception ex) {
-	    ex.printStackTrace();
-	}
-        
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
     }
-    
+
     public void menu() throws Exception {
-        
+
         System.out.println("Menu -- Escolher opção");
         Scanner scan = new Scanner(System.in);
-        
+
         int option = 1;
-        
+
         while (option != 0) {
-            
-            System.out.println("1 -- Criar Questionário\n2 -- Consultar Questionário\n"
+
+            System.out.println("1 -- Criar Questionário\n2 -- Consultar Questionários\n"
                     + "3 -- Apagar Questionário\n4 -- Obter Lista de Perguntas\n"
-                    + "5 -- Submeter Resposa\n6 -- Consultar Nº de Submissões\n"
+                    + "5 -- Submeter Resposta\n6 -- Consultar Nº de Submissões\n"
                     + "7 -- Obter Média de Valores\n0 -- Sair");
-            
-            option = scan.nextInt();
-            
-            this.applyAction(option);
+
+            try {
+
+                System.out.print("Opção: ");
+
+                option = scan.nextInt();
+
+                this.applyAction(option);
+
+            } catch (Exception e) {
+
+                scan.nextLine();
+                System.out.println("Opção inválida");
+            }
+
         }
     }
-    
+
     public void applyAction(int option) throws Exception {
-        
-        switch(option) {
-            
+
+        switch (option) {
+
+            case 0:
+                break;
+
             case 1:
-                
-                this.createSurvey();
-                
+                try {
+                    this.createSurvey();
+
+                } catch (Exception e) {
+
+                    System.out.println(e.getMessage());
+                }
+
                 break;
-                
+
             case 2:
-                
+
                 this.consultSurvey();
-                
+
                 break;
-                
+
             case 3:
-                
+
                 this.deleteSurvey();
-                
+
                 break;
-                
+
             case 4:
-                
+
                 this.listSurvey();
-                
+
                 break;
-                
+
             case 5:
-                
+
                 this.submitAnswer();
-                
+
                 break;
-                
+
             case 6:
-                
+
                 this.consultNumberSubmissions();
-                
+
                 break;
             case 7:
-                
+
                 this.meanValues();
-                
+
                 break;
-                
+
             default:
+
+                System.out.println("Opção: " + option + " desconhecida.\n"
+                        + "Por favor escolha uma opção entre 0 e 7.");
+
                 break;
         }
     }
 
-    private void meanValues() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void consultNumberSubmissions() {
-        
+    private void meanValues() throws RemoteException {
         Scanner scan = new Scanner(System.in);
-        
-        System.out.println();
-    }
 
-    private void submitAnswer() {
-        
-        Scanner scan = new Scanner(System.in);
-        
-        System.out.println("Survey ID to answer");
-        
-        int id_to_answer = scan.nextInt();
-        
-        /*Pedir perguntas de questionário ao servidor -> */
-        
-    }
-
-    private void listSurvey() {
-        
-        Scanner scan =  new Scanner(System.in);
-        
-        System.out.println("ID of survey to consult");
+        System.out.print("ID de questionário a consultar: ");
 
         int id_consult = scan.nextInt();
+        
+        Vector<QuestionAvg> avgQuest = this.man.average_Survey(id_consult);
+        
+        System.out.println("\tResultados:");
+        
+        for(QuestionAvg q : avgQuest) {
+            
+            System.out.println("\t\t" + q.question + ": " + q.avg);
+        }
     }
 
-    private void deleteSurvey() {
-        
+    private void consultNumberSubmissions() throws RemoteException {
+
         Scanner scan = new Scanner(System.in);
-        
-        System.out.println("ID of survey to remove");
-        
-        int id_remove = scan.nextInt();
+
+        System.out.print("ID de questionário a consultar: ");
+
+        int id_consult = scan.nextInt();
+
+        int subs = this.man.consult_numbers_answers(id_consult);
+
+        System.out.println("O questionário foi respondido: " + subs + " vezes.");
     }
 
-    private void consultSurvey() {
+    private void submitAnswer() throws RemoteException {
+
+        Scanner scan = new Scanner(System.in);
+
+        System.out.print("ID de questionário a responder: ");
+
+        int id_to_answer = scan.nextInt();
+
+        Vector<Answer> questions = this.man.getQuestions(id_to_answer);
+
+        int i = 0;
+
+        while (i < questions.size()) {
+
+            Answer ans = questions.get(i);
+
+            System.out.print("\t" + ans.getQuestion() + ": ");
+
+            int response = scan.nextInt();
+
+            if (response >= 1 && response <= 10) {
+
+                ans.setAnswers(response);
+                i++;
+            } else {
+
+                System.out.println("Por favor insira um valor entre 1 e 10.");
+            }
+
+        }
+
+        int subCode = this.man.answersSurvey(questions, id_to_answer);
         
-        
+        System.out.println("O seu código de submissão: " + subCode);
+
+    }
+
+    private void listSurvey() throws RemoteException {
+
+        Scanner scan = new Scanner(System.in);
+
+        System.out.print("ID de questionário a consultar: ");
+
+        int id_consult = scan.nextInt();
+
+        Questions q = this.man.questionsSurvey(id_consult);
+
+        System.out.println("Questões do questionário " + id_consult + " são:");
+
+        for (int i = 0; i < q.num_questions; i++) {
+
+            System.out.println("\tPergunta " + (i + 1) + " -- " + q.questions.get(i));
+        }
+    }
+
+    private void deleteSurvey() throws RemoteException {
+
+        Scanner scan = new Scanner(System.in);
+
+        System.out.print("ID de questionário a remover: ");
+
+        int id_remove = scan.nextInt();
+
+        this.man.deleteSurvey(id_remove);
+    }
+
+    private void consultSurvey() throws RemoteException {
+
+        Vector<Integer> result = this.man.consultSurvey();
+
+        for (Integer i : result) {
+
+            System.out.println("Questionário ID: " + i);
+        }
     }
 
     private void createSurvey() throws Exception {
-        
+
         Scanner scan = new Scanner(System.in);
-        Scanner scanQuests =  new Scanner(System.in);
-        
-        System.out.println("Num of questions");
-        
+
+        System.out.print("Número de perguntas: ");
+
         int num_quest = scan.nextInt();
-        
+
         if (num_quest >= 3 && num_quest <= 5) {
-            
-            System.out.println("Enter question");
-            
+
+            Scanner scanQuests = new Scanner(System.in);
+
             String[] questions = new String[num_quest];
-        
-            for(int i = 0; i < num_quest; i++) {
+
+            for (int i = 0; i < num_quest; i++) {
+
+                System.out.print("Pergunta " + (i + 1) + ": ");
 
                 questions[i] = scanQuests.nextLine();
             }
-            
-            Survey sur =  new Survey(num_quest, questions);
-            
+
+            Survey sur = new Survey(num_quest, questions);
+
             this.man.insertSurvey(sur);
-            
+
         } else {
-            
+
             throw new Exception("Number of questions out of limit");
         }
-      
+
     }
-} 
+}
