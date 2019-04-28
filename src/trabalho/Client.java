@@ -37,7 +37,6 @@ public class Client {
             cl.menu();
 
         } catch (Exception ex) {
-            ex.printStackTrace();
         }
 
     }
@@ -141,15 +140,24 @@ public class Client {
         System.out.print("ID de questionário a consultar: ");
 
         int id_consult = scan.nextInt();
-        
+
         Vector<QuestionAvg> avgQuest = this.man.average_Survey(id_consult);
-        
-        System.out.println("\tResultados:");
-        
-        for(QuestionAvg q : avgQuest) {
-            
-            System.out.println("\t\t" + q.question + ": " + q.avg);
+
+        if (avgQuest.size() > 0) {
+
+            System.out.println("\tResultados:");
+
+            for (QuestionAvg q : avgQuest) {
+
+                System.out.println("\t\t" + q.question + ": " + q.avg);
+            }
         }
+        
+        else {
+            
+            System.out.println("Questionário " + id_consult + " não encontrado.");
+        }
+
     }
 
     private void consultNumberSubmissions() throws RemoteException {
@@ -162,7 +170,11 @@ public class Client {
 
         int subs = this.man.consult_numbers_answers(id_consult);
 
-        System.out.println("O questionário foi respondido: " + subs + " vezes.");
+        if (subs >= 0) {
+            System.out.println("O questionário foi respondido: " + subs + " vezes.");
+        } else {
+            System.out.println("Questionário " + id_consult + " não encontrado.");
+        }
     }
 
     private void submitAnswer() throws RemoteException {
@@ -175,30 +187,37 @@ public class Client {
 
         Vector<Answer> questions = this.man.getQuestions(id_to_answer);
 
-        int i = 0;
+        if (questions.size() > 0) {
 
-        while (i < questions.size()) {
+            int i = 0;
 
-            Answer ans = questions.get(i);
+            while (i < questions.size()) {
 
-            System.out.print("\t" + ans.getQuestion() + ": ");
+                Answer ans = questions.get(i);
 
-            int response = scan.nextInt();
+                System.out.print("\t" + ans.getQuestion() + ": ");
 
-            if (response >= 1 && response <= 10) {
+                int response = scan.nextInt();
 
-                ans.setAnswers(response);
-                i++;
-            } else {
+                if (response >= 1 && response <= 10) {
 
-                System.out.println("Por favor insira um valor entre 1 e 10.");
+                    ans.setAnswers(response);
+                    i++;
+                } else {
+
+                    System.out.println("Por favor insira um valor entre 1 e 10.");
+                }
+
             }
 
-        }
+            int subCode = this.man.answersSurvey(questions, id_to_answer);
 
-        int subCode = this.man.answersSurvey(questions, id_to_answer);
-        
-        System.out.println("O seu código de submissão: " + subCode);
+            System.out.println("O seu código de submissão: " + subCode);
+
+        } else {
+
+            System.out.println("Questionário " + id_to_answer + " não encontrado.");
+        }
 
     }
 
@@ -214,10 +233,17 @@ public class Client {
 
         System.out.println("Questões do questionário " + id_consult + " são:");
 
-        for (int i = 0; i < q.num_questions; i++) {
+        if (q.questions.size() > 0) {
 
-            System.out.println("\tPergunta " + (i + 1) + " -- " + q.questions.get(i));
+            for (int i = 0; i < q.num_questions; i++) {
+
+                System.out.println("\tPergunta " + (i + 1) + " -- " + q.questions.get(i));
+            }
+        } else {
+
+            System.out.println("Questionário " + id_consult + " não encontrado.");
         }
+
     }
 
     private void deleteSurvey() throws RemoteException {
@@ -229,16 +255,25 @@ public class Client {
         int id_remove = scan.nextInt();
 
         this.man.deleteSurvey(id_remove);
+        
+        System.out.println("Questionário " + id_remove + " apagado.");
     }
 
     private void consultSurvey() throws RemoteException {
 
         Vector<Integer> result = this.man.consultSurvey();
 
-        for (Integer i : result) {
+        if (result.size() > 0) {
 
-            System.out.println("Questionário ID: " + i);
+            for (Integer i : result) {
+
+                System.out.println("Questionário ID: " + i);
+            }
+        } else {
+
+            System.out.println("Não há questionários a listar.");
         }
+
     }
 
     private void createSurvey() throws Exception {
@@ -271,5 +306,6 @@ public class Client {
             throw new Exception("Number of questions out of limit");
         }
 
+        System.out.println("Questionário criado.");
     }
 }

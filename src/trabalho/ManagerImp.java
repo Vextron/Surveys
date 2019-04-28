@@ -166,7 +166,7 @@ public class ManagerImp extends UnicastRemoteObject implements Manager, java.io.
     @Override
     public int answersSurvey(Vector<Answer> a, int id) throws RemoteException {
 
-        int submissionCode = 0;
+        int submissionCode = -1;
 
         try {
             

@@ -5,8 +5,6 @@
  */
 package trabalho;
 
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 
 /**
  *
@@ -17,13 +15,9 @@ public class Survey implements java.io.Serializable{
     int num_quests;
     String[] questions;
     
-    Survey(int num_quests, String[] questions) {
+    public Survey(int num_quests, String[] questions) {
         
         this.num_quests = num_quests;
         this.questions = questions;
-    }
-
-    Survey(){
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
