@@ -27,6 +27,15 @@ public class Server {
     public static void main(String[] args) throws RemoteException, Exception {
 
         int regPort = 9000;
+        
+        if (args.length > 0) {
+            
+            regPort = Integer.parseInt(args[0]);
+        }
+        else {
+            
+            System.out.println("A usar valor de porto por definição.");
+        }
 
         try {
             InputStream in = new FileInputStream("./conf.properties");
@@ -48,7 +57,7 @@ public class Server {
 
             registry.rebind("manager", man);
 
-            System.out.println("Ready to Go!");
+            System.out.println("Pronto a aceitar ligações...");
 
         } catch (Exception e) {
             System.out.println(e);

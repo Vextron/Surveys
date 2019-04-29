@@ -36,6 +36,15 @@ public class Client {
         String regHost = "localhost";
         String regPort = "9000";
 
+        if (args.length == 2) {
+
+            regHost = args[0];
+            regPort = args[1];
+        } else {
+
+            System.out.println("A usar valores de host e porto por definição.");
+        }
+
         try {
 
             Manager man = (Manager) java.rmi.Naming.lookup("rmi://" + regHost + ":"
@@ -213,15 +222,23 @@ public class Client {
 
                 System.out.print("\t" + ans.getQuestion() + ": ");
 
-                int response = scan.nextInt();
+                try {
 
-                if (response >= 1 && response <= 10) {
+                    int response = scan.nextInt();
 
-                    ans.setAnswers(response);
-                    i++;
-                } else {
+                    if (response >= 1 && response <= 10) {
 
+                        ans.setAnswers(response);
+                        i++;
+                    } else {
+
+                        System.out.println("Por favor insira um valor entre 1 e 10.");
+                    }
+                    
+                } catch (Exception e) {
+                    
                     System.out.println("Por favor insira um valor entre 1 e 10.");
+                    scan.nextLine();
                 }
 
             }

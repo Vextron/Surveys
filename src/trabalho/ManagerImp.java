@@ -243,9 +243,11 @@ public class ManagerImp extends UnicastRemoteObject implements Manager, java.io.
 
             ResultSet result = state.executeQuery(query);
 
-            if(result.next());
+            if(result.next()){
 
                 numAns = result.getInt("numans");
+                
+            }
 
             result.close();
 
