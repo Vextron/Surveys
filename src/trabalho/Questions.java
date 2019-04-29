@@ -16,6 +16,11 @@ public class Questions implements java.io.Serializable {
     Vector<String> questions;
     int num_questions;
     
+    /**
+     *
+     * @param num_quests
+     * @param questions
+     */
     public Questions(int num_quests, Vector<String> questions) {
         
         this.num_questions = num_quests;

@@ -15,6 +15,11 @@ public class Survey implements java.io.Serializable{
     int num_quests;
     String[] questions;
     
+    /**
+     *
+     * @param num_quests
+     * @param questions
+     */
     public Survey(int num_quests, String[] questions) {
         
         this.num_quests = num_quests;

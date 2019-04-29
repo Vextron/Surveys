@@ -24,6 +24,15 @@ public class ManagerImp extends UnicastRemoteObject implements Manager, java.io.
     private final Semaphore semaphore = new Semaphore(1, true);
     private PostgresConnector pc;
 
+    /**
+     *
+     * @param host
+     * @param user
+     * @param db
+     * @param pw
+     * @throws RemoteException
+     * @throws Exception
+     */
     public ManagerImp(String host, String user, String db, String pw) throws RemoteException, Exception {
         super();
 
@@ -31,6 +40,11 @@ public class ManagerImp extends UnicastRemoteObject implements Manager, java.io.
         this.pc.connect();
     }
 
+    /**
+     *
+     * @param s
+     * @throws RemoteException
+     */
     @Override
     public void insertSurvey(Survey s) throws RemoteException {
 
@@ -64,6 +78,11 @@ public class ManagerImp extends UnicastRemoteObject implements Manager, java.io.
 
     }
 
+    /**
+     *
+     * @return
+     * @throws RemoteException
+     */
     @Override
     public Vector<Integer> consultSurvey() throws RemoteException {
 
@@ -94,6 +113,12 @@ public class ManagerImp extends UnicastRemoteObject implements Manager, java.io.
         return result;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws RemoteException
+     */
     @Override
     public int deleteSurvey(int id) throws RemoteException {
         
@@ -118,6 +143,12 @@ public class ManagerImp extends UnicastRemoteObject implements Manager, java.io.
         return deleted;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws RemoteException
+     */
     @Override
     public Questions questionsSurvey(int id) throws RemoteException {
 
@@ -147,6 +178,13 @@ public class ManagerImp extends UnicastRemoteObject implements Manager, java.io.
         return new Questions(i, questions);
     }
 
+    /**
+     *
+     * @param a
+     * @param id
+     * @return
+     * @throws RemoteException
+     */
     @Override
     public int answersSurvey(Vector<Answer> a, int id) throws RemoteException {
 
@@ -186,6 +224,12 @@ public class ManagerImp extends UnicastRemoteObject implements Manager, java.io.
 
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws RemoteException
+     */
     @Override
     public int consult_numbers_answers(int id) throws RemoteException {
 
@@ -213,6 +257,12 @@ public class ManagerImp extends UnicastRemoteObject implements Manager, java.io.
         return numAns;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws RemoteException
+     */
     @Override
     public Vector<QuestionAvg> average_Survey(int id) throws RemoteException {
 
@@ -244,6 +294,12 @@ public class ManagerImp extends UnicastRemoteObject implements Manager, java.io.
         return quest;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws RemoteException
+     */
     @Override
     public Vector<Answer> getQuestions(int id) throws RemoteException {
 
@@ -272,6 +328,10 @@ public class ManagerImp extends UnicastRemoteObject implements Manager, java.io.
         return questions;
     }
 
+    /**
+     *
+     * @throws RemoteException
+     */
     @Override
     public void disconnectDB() throws RemoteException {
 

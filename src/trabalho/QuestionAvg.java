@@ -14,6 +14,11 @@ public class QuestionAvg implements java.io.Serializable {
     String question;
     float avg;
     
+    /**
+     *
+     * @param question
+     * @param avg
+     */
     public QuestionAvg(String question, float avg) {
         
         this.question = question;

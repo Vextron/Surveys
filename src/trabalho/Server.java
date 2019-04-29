@@ -18,6 +18,12 @@ import java.util.Properties;
  */
 public class Server {
 
+    /**
+     *
+     * @param args
+     * @throws RemoteException
+     * @throws Exception
+     */
     public static void main(String[] args) throws RemoteException, Exception {
 
         int regPort = 9000;
@@ -50,6 +56,14 @@ public class Server {
 
     }
 
+    /**
+     *
+     * @param host
+     * @param user
+     * @param database
+     * @param psw
+     * @throws Exception
+     */
     public static void checkTables(String host, String user, String database, String psw) throws Exception {
 
         PostgresConnector pc = new PostgresConnector(host, database, user, psw);

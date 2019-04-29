@@ -16,6 +16,12 @@ public class Answer implements java.io.Serializable {
     private final String question;
     private int answer = 0;
 
+    /**
+     *
+     * @param id
+     * @param surveyid
+     * @param question
+     */
     public Answer(int id, int surveyid, String question) {
 
         this.id = id;
@@ -23,26 +29,46 @@ public class Answer implements java.io.Serializable {
         this.question = question;
     }
 
+    /**
+     *
+     * @param op
+     */
     public void setAnswers(int op) {
 
         this.answer = op;
     }
     
+    /**
+     *
+     * @return
+     */
     public int getId() {
         
         return this.id;
     }
     
+    /**
+     *
+     * @return
+     */
     public int getSurveyId() {
         
         return this.surveyid;
     }
     
+    /**
+     *
+     * @return
+     */
     public int getAnswer() {
         
         return this.answer;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getQuestion() {
         
         return this.question;

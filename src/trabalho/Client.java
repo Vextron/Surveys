@@ -17,11 +17,20 @@ public class Client {
 
     Manager man;
 
+    /**
+     *
+     * @param man
+     */
     public Client(Manager man) {
 
         this.man = man;
     }
 
+    /**
+     *
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
 
         String regHost = "localhost";
@@ -41,6 +50,10 @@ public class Client {
 
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     public void menu() throws Exception {
 
         System.out.println("Menu -- Escolher opção");
@@ -72,6 +85,11 @@ public class Client {
         }
     }
 
+    /**
+     *
+     * @param option
+     * @throws Exception
+     */
     public void applyAction(int option) throws Exception {
 
         switch (option) {

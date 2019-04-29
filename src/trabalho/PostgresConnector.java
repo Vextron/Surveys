@@ -2,6 +2,10 @@ package trabalho;
 
 import java.sql.*;
 
+/**
+ *
+ * @author mt
+ */
 public class PostgresConnector {
 
     private String PG_HOST;
@@ -12,6 +16,13 @@ public class PostgresConnector {
     Connection con = null;
     Statement stmt = null;
 
+    /**
+     *
+     * @param host
+     * @param db
+     * @param user
+     * @param pw
+     */
     public PostgresConnector(String host, String db, String user, String pw) {
         PG_HOST=host;
         PG_DB= db;
@@ -19,6 +30,10 @@ public class PostgresConnector {
         PWD= pw;
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     public void connect() throws Exception {
         try {
             Class.forName("org.postgresql.Driver");
@@ -35,6 +50,9 @@ public class PostgresConnector {
         }
     }
 
+    /**
+     *
+     */
     public void disconnect() {    // importante: fechar a ligacao 'a BD
         try {
             stmt.close();
@@ -44,6 +62,10 @@ public class PostgresConnector {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public Statement getStatement() {
         return stmt;
     }
