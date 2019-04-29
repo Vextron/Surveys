@@ -151,10 +151,8 @@ public class Client {
 
                 System.out.println("\t\t" + q.question + ": " + q.avg);
             }
-        }
-        
-        else {
-            
+        } else {
+
             System.out.println("Questionário " + id_consult + " não encontrado.");
         }
 
@@ -231,9 +229,9 @@ public class Client {
 
         Questions q = this.man.questionsSurvey(id_consult);
 
-        System.out.println("Questões do questionário " + id_consult + " são:");
-
         if (q.questions.size() > 0) {
+
+            System.out.println("Questões do questionário " + id_consult + " são:");
 
             for (int i = 0; i < q.num_questions; i++) {
 
@@ -254,9 +252,18 @@ public class Client {
 
         int id_remove = scan.nextInt();
 
-        this.man.deleteSurvey(id_remove);
-        
-        System.out.println("Questionário " + id_remove + " apagado.");
+        int deleted = this.man.deleteSurvey(id_remove);
+
+        if (deleted == 0) {
+
+            System.out.println("Questionário " + id_remove + " não encontrado.");
+
+        } else {
+
+            System.out.println("Questionário " + id_remove + " apagado.");
+
+        }
+
     }
 
     private void consultSurvey() throws RemoteException {

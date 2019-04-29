@@ -6,6 +6,7 @@
 package trabalho;
 
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.Vector;
 
 /**
@@ -16,11 +17,12 @@ public interface Manager extends java.rmi.Remote {
     
     public void insertSurvey(Survey s) throws RemoteException;
     public Vector<Integer> consultSurvey() throws RemoteException;
-    public void deleteSurvey(int id) throws RemoteException;
+    public int deleteSurvey(int id) throws RemoteException;
     public Questions questionsSurvey(int id) throws RemoteException;
     public int answersSurvey(Vector<Answer> a, int id) throws RemoteException;
     public int consult_numbers_answers(int id) throws RemoteException;
     public Vector<QuestionAvg> average_Survey(int id) throws RemoteException;
     public Vector<Answer> getQuestions(int id) throws RemoteException;
+    public void disconnectDB() throws RemoteException;
     
 }
